@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ========== META ========== -->
+    <title>Auronova — Personal Listening Console</title>
+    <meta name="description" content="Spotify-powered music intelligence with mood-aware discovery, direct handoff to Spotify, and a personalized listening dossier">
+
+    <!-- ========== FONTS ========== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ========== STYLES ========== -->
+    <link rel="stylesheet" href="styles.css?v=20260318d">
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- ================================================================ -->
+    <!-- LOGIN / LANDING SCREEN                                           -->
+    <!-- Full-screen cinematic hero · dramatic brand presence · USPs      -->
+    <!-- ================================================================ -->
+    <section id="screen-login" class="screen active">
+        <div class="login-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="login-layer">
+            <!-- Brand name — oversized, unmissable -->
+            <div class="brand-block reveal">
+                <span class="brand-pre">INTRODUCING</span>
+                <h1 class="brand-name">Auronova</h1>
+                <div class="brand-line"></div>
+            </div>
+
+            <!-- Tagline — editorial, breathing -->
+            <p class="hero-tag reveal rd2">
+                Your music,<br><em>seen for the first time.</em>
+            </p>
+
+            <!-- Feature strip — numbered, La Tavola editorial style -->
+            <div class="feat-strip reveal rd3">
+                <div class="feat-item">
+                    <span class="feat-idx">01</span>
+                    <div class="feat-body">
+                        <span class="feat-title">Mood‑Aware</span>
+                        <span class="feat-desc">Recs that match your moment</span>
+                    </div>
+                </div>
+                <div class="feat-sep"></div>
+                <div class="feat-item">
+                    <span class="feat-idx">02</span>
+                    <div class="feat-body">
+                        <span class="feat-title">Discovery Dial</span>
+                        <span class="feat-desc">Control how far you explore</span>
+                    </div>
+                </div>
+                <div class="feat-sep"></div>
+                <div class="feat-item">
+                    <span class="feat-idx">03</span>
+                    <div class="feat-body">
+                        <span class="feat-title">Music DNA</span>
+                        <span class="feat-desc">A crystal of your taste</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <button class="btn-cta reveal rd4" onclick="loginWithSpotify()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381C8.64 5.801 15.6 6.001 20.04 8.4c.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Connect with Spotify
+            </button>
+            <p class="fine reveal rd5">Read‑only access · We never touch your library</p>
+            <div class="signal-row reveal rd5">
+                <span class="signal-chip">Live Spotify OAuth</span>
+                <span class="signal-chip">Rustic console UI</span>
+                <span class="signal-chip">Open in Spotify</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- APP SHELL                                                        -->
+    <!-- ================================================================ -->
+    <section id="screen-app" class="screen">
+
+        <!-- ========== MINIMAL TOP BAR ========== -->
+        <header class="topbar">
+            <div class="topbar-brand-wrap">
+                <span class="topbar-brand">Auronova</span>
+                <span class="topbar-sub" id="topbar-sub">Personal listening console</span>
+            </div>
+            <div class="topbar-ctx" id="ctx-banner">
+                <span class="ctx-chip">🕐 Fri Evening</span>
+                <span class="ctx-chip">😌 Chill</span>
+            </div>
+            <div class="avatar-ring"><div class="avatar">NP</div></div>
+        </header>
+
+        <main class="main">
+
+            <!-- ============================================================ -->
+            <!-- DASHBOARD                                                    -->
+            <!-- ============================================================ -->
+            <div id="pg-dashboard" class="pg active">
+
+                <!-- ## Greeting + Stats side-by-side -->
+                <div class="spread">
+                    <div class="s" style="--d:0">
+                        <span class="badge">DASHBOARD</span>
+                        <h2 class="display" id="dashboard-greeting">Good Evening,<br>Neal.</h2>
+                    </div>
+                    <div class="stat-float s" id="dashboard-stats" style="--d:1">
+                        <div class="sf"><span class="sf-n">0h</span><span class="sf-l">2026 est. hours</span></div>
+                        <div class="sf"><span class="sf-n">0</span><span class="sf-l">artists mapped</span></div>
+                        <div class="sf"><span class="sf-n">0</span><span class="sf-l">core genres</span></div>
+                    </div>
+                </div>
+
+                <!-- ## Featured Artist — full-width hero -->
+                <div class="feat-card s" style="--d:2" id="feat"></div>
+
+                <!-- ## Artist Grid #2-5 -->
+                <div class="a-grid s" style="--d:3" id="a-grid"></div>
+
+                <!-- ## Genre Visualization — HiDPI canvas -->
+                <div class="section-wide s" style="--d:4">
+                    <span class="badge">GENRE BREAKDOWN</span>
+                    <div class="genre-wrap">
+                        <div class="genre-board">
+                            <div class="genre-canvas-shell">
+                                <canvas id="genre-canvas"></canvas>
+                            </div>
+                            <div class="genre-panel">
+                                <div class="genre-panel-head">
+                                    <span class="genre-panel-title">Spectrum Ledger</span>
+                                    <span class="genre-panel-copy" id="genre-total-hours">Awaiting sync</span>
+                                </div>
+                                <div class="genre-panel-stats">
+                                    <div class="genre-stat-card">
+                                        <span class="genre-stat-k">Dominant</span>
+                                        <span class="genre-stat-v" id="genre-dominant">Pending</span>
+                                    </div>
+                                    <div class="genre-stat-card">
+                                        <span class="genre-stat-k">Spread</span>
+                                        <span class="genre-stat-v" id="genre-spread">Pending</span>
+                                    </div>
+                                </div>
+                                <div class="genre-ledger" id="genre-ledger"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- DISCOVER                                                     -->
+            <!-- ============================================================ -->
+            <div id="pg-discover" class="pg">
+
+                <!-- ## Editorial alert -->
+                <div class="alert-editorial s" style="--d:0; display:none;" id="bubble-alert">
+                    <span class="alert-dot"></span>
+                    <span class="alert-text"></span>
+                    <span class="alert-action">turn the dial up ↗</span>
+                </div>
+
+                <!-- ## Page Header -->
+                <div class="s" style="--d:1">
+                    <span class="badge">EXPLORE</span>
+                    <h2 class="display">Discover</h2>
+                    <p class="body-lg">Find your next obsession.</p>
+                </div>
+
+                <!-- ## Controls — mood + dial -->
+                <div class="ctrl-row s" style="--d:2">
+                    <div class="ctrl-half">
+                        <span class="ctrl-lbl">Mood</span>
+                        <div class="mood-strip">
+                            <button class="mood active" data-m="energetic" onclick="pickMood(this)">⚡ Energetic</button>
+                            <button class="mood" data-m="chill" onclick="pickMood(this)">😌 Chill</button>
+                            <button class="mood" data-m="focused" onclick="pickMood(this)">🎯 Focused</button>
+                            <button class="mood" data-m="melancholy" onclick="pickMood(this)">😢 Melancholy</button>
+                        </div>
+                    </div>
+                    <div class="ctrl-half dial-wrap">
+                        <div class="dial-chrome">
+                            <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                            <span class="chrome-t">discovery_dial</span>
+                        </div>
+                        <div class="dial-inner">
+                            <input type="range" class="dial-range" id="dial" min="0" max="100" value="35" oninput="moveDial(this.value)">
+                            <div class="dial-readout">
+                                <span class="dial-end">Familiar</span>
+                                <span class="dial-val" id="dial-val">35<span class="dial-pct">%</span></span>
+                                <span class="dial-end">Uncharted</span>
+                            </div>
+                            <p class="dial-hint" id="dial-hint">Related artists in your genre family</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ## The Crate -->
+                <div class="s" style="--d:3">
+                    <div class="spread" style="margin-bottom:0.75rem">
+                        <h3 class="h-section">The Crate</h3>
+                        <button class="pill-btn" onclick="shuffleCrate()">↻ Dig deeper</button>
+                    </div>
+                    <div class="crate" id="crate"></div>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- MUSIC DNA                                                    -->
+            <!-- ============================================================ -->
+            <div id="pg-dna" class="pg">
+                <div class="dna-page">
+                    <div class="dna-hero s" style="--d:0">
+                        <span class="badge">YOUR FINGERPRINT</span>
+                        <h2 class="display">Music<br>DNA</h2>
+                        <p class="body-lg">A hand-built dossier of your habits, obsessions, and strange little genre collisions.</p>
+                    </div>
+
+                    <div class="dna-layout">
+                        <div class="dna-card s" style="--d:1">
+                            <div class="dna-card-head">
+                                <span class="dna-card-title">Specimen Map</span>
+                                <span class="dna-card-chip">AURONOVA / PERSONAL</span>
+                            </div>
+                            <canvas id="dna-canvas"></canvas>
+                            <div class="dna-wm">
+                                <div class="dna-wm-row"><span>AURONOVA</span><span>2026</span></div>
+                                <div class="dna-wm-center">
+                                    <div class="dna-wm-name"></div>
+                                    <div class="dna-wm-sub"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dna-side s" style="--d:2">
+                            <div class="dna-stats-grid" id="dna-stats-grid">
+                                <div class="dna-stat-tile">
+                                    <span class="dna-stat-k">Dominant Strand</span>
+                                    <span class="dna-stat-v" id="dna-top-genre">Pending</span>
+                                </div>
+                                <div class="dna-stat-tile">
+                                    <span class="dna-stat-k">Anchor Artist</span>
+                                    <span class="dna-stat-v" id="dna-top-artist">Pending</span>
+                                </div>
+                                <div class="dna-stat-tile">
+                                    <span class="dna-stat-k">Signal Density</span>
+                                    <span class="dna-stat-v" id="dna-density">Pending</span>
+                                </div>
+                                <div class="dna-stat-tile">
+                                    <span class="dna-stat-k">Mutation Index</span>
+                                    <span class="dna-stat-v" id="dna-mutation">Pending</span>
+                                </div>
+                            </div>
+
+                            <div class="dna-sequence-card">
+                                <div class="dna-sequence-head">
+                                    <span class="badge">Genome Sequence</span>
+                                    <span class="dna-sequence-meta" id="dna-sequence-meta">Pending</span>
+                                </div>
+                                <div class="dna-sequence-list" id="dna-sequence"></div>
+                            </div>
+
+                            <div class="dna-journal">
+                                <span class="badge">Listener Dossier</span>
+                                <p class="dna-notes" id="dna-notes">Your listening summary will appear here once the DNA map finishes drawing.</p>
+                            </div>
+
+                            <div class="dna-ledger">
+                                <span class="badge">Taste Ledger</span>
+                                <div class="dna-ledger-row">
+                                    <span class="ledger-key">Primary region</span>
+                                    <span class="ledger-val" id="dna-region-primary">Pending</span>
+                                </div>
+                                <div class="dna-ledger-row">
+                                    <span class="ledger-key">Secondary pull</span>
+                                    <span class="ledger-val" id="dna-region-secondary">Pending</span>
+                                </div>
+                                <div class="dna-ledger-row">
+                                    <span class="ledger-key">Most replayable mood</span>
+                                    <span class="ledger-val" id="dna-mood-axis">Pending</span>
+                                </div>
+                                <div class="dna-ledger-row">
+                                    <span class="ledger-key">Collector note</span>
+                                    <span class="ledger-val" id="dna-collector-note">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dna-bottom s" style="--d:3">
+                        <div class="tag-row" id="dna-tags"></div>
+
+                        <div class="dna-signal-grid">
+                            <div class="dna-signal-card">
+                                <span class="dna-signal-k">Orbit Bias</span>
+                                <span class="dna-signal-v" id="dna-orbit-bias">Pending</span>
+                            </div>
+                            <div class="dna-signal-card">
+                                <span class="dna-signal-k">Rare Strand</span>
+                                <span class="dna-signal-v" id="dna-rare-strand">Pending</span>
+                            </div>
+                            <div class="dna-signal-card">
+                                <span class="dna-signal-k">Region Count</span>
+                                <span class="dna-signal-v" id="dna-region-count">Pending</span>
+                            </div>
+                        </div>
+
+                        <div class="region-block">
+                            <span class="badge" style="margin-bottom:0.4rem">Taste Regions</span>
+                            <div class="region-list">
+                                <span class="rl" style="--rc:#6B8F71"><b class="rdot"></b>Indie Core — 38%</span>
+                                <span class="rl" style="--rc:#8B6F5E"><b class="rdot"></b>R&B Nights — 22%</span>
+                                <span class="rl" style="--rc:#9B9A5B"><b class="rdot"></b>Psych Drift — 18%</span>
+                                <span class="rl" style="--rc:#7B9E87"><b class="rdot"></b>Weekend Jazz — 12%</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-cta btn-share" onclick="shareDNA()">✦ Archive This DNA Card</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- SETTINGS                                                     -->
+            <!-- ============================================================ -->
+            <div id="pg-settings" class="pg">
+                <div class="settings-pg">
+                    <div class="s" style="--d:0">
+                        <span class="badge">PREFERENCES</span>
+                        <h2 class="display">Settings</h2>
+                    </div>
+                    <div class="settings-win s" style="--d:1">
+                        <div class="dial-chrome"><span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span><span class="chrome-t">preferences</span></div>
+                        <div class="s-body">
+                            <div class="srow"><div><span class="srow-n">Default Discovery Level</span><span class="srow-d">Starting dial position</span></div><input type="range" min="0" max="100" value="35" id="settings-discovery" class="dial-range sm-range"></div>
+                            <div class="srow"><div><span class="srow-n">Sync Spotify</span><span class="srow-d" id="sync-status-copy">Pull the latest library signals</span></div><button class="pill-btn" id="settings-sync-btn">Sync</button></div>
+                            <div class="srow last"><div><span class="srow-n">Log Out</span><span class="srow-d">Disconnect your Spotify</span></div><button class="pill-btn warn" id="settings-logout-btn">Logout</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ========== FLOATING DOCK ========== -->
+        <nav class="dock">
+            <button class="dock-btn active" data-p="dashboard" onclick="navigateTo('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="di"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Home</span></button>
+            <button class="dock-btn" data-p="discover" onclick="navigateTo('discover')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="di"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg><span>Discover</span></button>
+            <button class="dock-btn" data-p="dna" onclick="navigateTo('dna')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="di"><circle cx="12" cy="12" r="9"/><path d="M12 3C8 8 16 16 12 21"/><path d="M3 12C8 8 16 16 21 12"/></svg><span>DNA</span></button>
+            <button class="dock-btn" data-p="settings" onclick="navigateTo('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="di"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg><span>Settings</span></button>
+        </nav>
+    </section>
+
+    <script src="app.js?v=20260318d"></script>
+</body>
+</html>
